@@ -37,3 +37,34 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'debugger'
+
+gem 'bootstrap-sass'
+gem 'cancan'
+gem 'devise'
+gem 'figaro'
+gem 'rolify'
+gem 'simple_form'
+
+group :assets do
+  gem 'therubyracer', :platform=>:ruby
+end
+
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller', :platforms=>[:mri_19, :mri_20, :rbx]
+  gem 'quiet_assets'
+end
+
+group :development, :test do
+  gem 'factory_girl_rails'
+  gem 'rspec-rails'
+end
+
+group :test do
+  gem 'capybara'
+  gem 'cucumber-rails', :require=>false
+  gem 'database_cleaner', '1.0.1'
+  gem 'email_spec'
+  gem 'launchy'
+end
+
