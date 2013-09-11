@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130911071117) do
+ActiveRecord::Schema.define(:version => 20130911103222) do
 
   create_table "genres", :force => true do |t|
     t.string   "name"
@@ -31,8 +31,11 @@ ActiveRecord::Schema.define(:version => 20130911071117) do
     t.string   "poster_url"
     t.string   "tagline"
     t.integer  "year"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.string   "directory_name"
+    t.integer  "source_id"
+    t.string   "imdb_id"
   end
 
   create_table "people", :force => true do |t|
