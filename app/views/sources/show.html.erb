@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @source.name %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @source.description %>
+</p>
+
+<p>
+  <b>Path:</b>
+  <%= @source.path %>
+</p>
+
+
+<%= link_to 'Edit', edit_source_path(@source) %> |
+<%= link_to 'Back', sources_path %>

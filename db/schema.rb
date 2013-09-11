@@ -11,7 +11,35 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130910101144) do
+ActiveRecord::Schema.define(:version => 20130911071117) do
+
+  create_table "genres", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "movies", :force => true do |t|
+    t.string   "name"
+    t.float    "rating"
+    t.integer  "votes"
+    t.integer  "length"
+    t.string   "trailer_url"
+    t.text     "plot"
+    t.text     "plot_synopsis"
+    t.text     "plot_summary"
+    t.string   "poster_url"
+    t.string   "tagline"
+    t.integer  "year"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "people", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "roles", :force => true do |t|
     t.string   "name"
@@ -23,6 +51,14 @@ ActiveRecord::Schema.define(:version => 20130910101144) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], :name => "index_roles_on_name"
+
+  create_table "sources", :force => true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "path"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false

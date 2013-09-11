@@ -1,0 +1,60 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @movie.name %>
+</p>
+
+<p>
+  <b>Rating:</b>
+  <%= @movie.rating %>
+</p>
+
+<p>
+  <b>Votes:</b>
+  <%= @movie.votes %>
+</p>
+
+<p>
+  <b>Length:</b>
+  <%= @movie.length %>
+</p>
+
+<p>
+  <b>Trailer url:</b>
+  <%= @movie.trailer_url %>
+</p>
+
+<p>
+  <b>Plot:</b>
+  <%= @movie.plot %>
+</p>
+
+<p>
+  <b>Plot synopsis:</b>
+  <%= @movie.plot_synopsis %>
+</p>
+
+<p>
+  <b>Plot summary:</b>
+  <%= @movie.plot_summary %>
+</p>
+
+<p>
+  <b>Poster url:</b>
+  <%= @movie.poster_url %>
+</p>
+
+<p>
+  <b>Tagline:</b>
+  <%= @movie.tagline %>
+</p>
+
+<p>
+  <b>Year:</b>
+  <%= @movie.year %>
+</p>
+
+
+<%= link_to 'Edit', edit_movie_path(@movie) %> |
+<%= link_to 'Back', movies_path %>
