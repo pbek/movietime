@@ -26,13 +26,13 @@
         <a target="_blank" href="<%= movie.trailer_url %>">trailer</a>
       <% end %>
     </td>
-    <td><%=h truncate(movie.plot_summary, :length => 80) %></td>
+    <td><%= h truncate(movie.plot_summary, :length => 80) %></td>
     <td>
       <% if movie.poster_url %>
         <a href="<%= movie.poster_url %>"><img src="<%= movie.poster_url %>" alt="<%= movie.name %>" height="50" style="height: 50px;" rel="lightbox" /></a>
       <% end %>
     </td>
-    <td><%= movie.tagline %></td>
+    <td><%= movie.tagline.html_safe unless movie.tagline.nil? %></td>
     <td><%= movie.year %></td>
     <td><a target="_blank" href="file://<%= movie.full_path %>">Open</a></td>
     <td><%= link_to 'Show', movie %></td>
