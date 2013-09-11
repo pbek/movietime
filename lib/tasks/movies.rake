@@ -28,7 +28,7 @@ namespace :movies do
         i = Imdb::Search.new(clean_name)
         imdb_movies = i.movies
         imdb_movies[0..9].each_with_index do |imdb_movie, key|
-          puts "    (#{key}): #{imdb_movie.title}"
+          puts "    (#{key}): #{imdb_movie.title} - #{imdb_movie.url}"
         end
 
         choice = STDIN.gets.chomp

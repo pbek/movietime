@@ -7,6 +7,10 @@ class Movie < ActiveRecord::Base
   validates :name,
     :presence => true
 
+  def full_path
+    "#{self.source.path}/#{self.directory_name}"
+  end
+
   def self.cleanupDirectoryName(str)
     replacements = [
       [/DVDRip/i, ""],

@@ -4,15 +4,13 @@
   <tr>
     <th>Name</th>
     <th>Rating</th>
-    <th>Votes</th>
     <th>Length</th>
-    <th>Trailer url</th>
-    <th>Plot</th>
-    <th>Plot synopsis</th>
-    <th>Plot summary</th>
+    <th>Trailer</th>
+    <th>Plot Summary</th>
     <th>Poster url</th>
     <th>Tagline</th>
     <th>Year</th>
+    <th>Dir</th>
     <th></th>
     <th></th>
     <th></th>
@@ -21,16 +19,22 @@
 <% @movies.each do |movie| %>
   <tr>
     <td><%= movie.name %></td>
-    <td><%= movie.rating %></td>
-    <td><%= movie.votes %></td>
-    <td><%= movie.length %></td>
-    <td><%= movie.trailer_url %></td>
-    <td><%= movie.plot %></td>
-    <td><%= movie.plot_synopsis %></td>
-    <td><%= movie.plot_summary %></td>
-    <td><%= movie.poster_url %></td>
+    <td><%= movie.rating %> (<%= movie.votes %>)</td>
+    <td><%= Time.at(movie.length * 60).utc.strftime("%k:%M") %></td>
+    <td>
+      <% if movie.trailer_url %>
+        <a target="_blank" href="<%= movie.trailer_url %>">trailer</a>
+      <% end %>
+    </td>
+    <td><%=h truncate(movie.plot_summary, :length => 80) %></td>
+    <td>
+      <% if movie.poster_url %>
+        <a href="<%= movie.poster_url %>"><img src="<%= movie.poster_url %>" alt="<%= movie.name %>" height="50" style="height: 50px;" rel="lightbox" /></a>
+      <% end %>
+    </td>
     <td><%= movie.tagline %></td>
     <td><%= movie.year %></td>
+    <td><a target="_blank" href="file://<%= movie.full_path %>">Open</a></td>
     <td><%= link_to 'Show', movie %></td>
     <td><%= link_to 'Edit', edit_movie_path(movie) %></td>
     <td><%= link_to 'Destroy', movie, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -38,6 +42,3 @@
 <% end %>
 </table>
 
-<br />
-
-<%= link_to 'New Movie', new_movie_path %>
