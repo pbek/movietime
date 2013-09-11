@@ -20,7 +20,7 @@
   <tr>
     <td><%= movie.name %></td>
     <td><%= movie.rating %> (<%= movie.votes %>)</td>
-    <td><%= Time.at(movie.length * 60).utc.strftime("%k:%M") %></td>
+    <td><%= Time.at(movie.length * 60).utc.strftime("%kh %Mmin") %></td>
     <td>
       <% if movie.trailer_url %>
         <a target="_blank" href="<%= movie.trailer_url %>">trailer</a>
