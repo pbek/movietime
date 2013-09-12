@@ -47,4 +47,25 @@ namespace :movies do
       end
     end
   end
+
+  #
+  # usage: rake movies:update_with_imdb
+  #
+  desc "Update all movies with imdb"
+  task :update_with_imdb => :environment do |t, args|
+    movies = Movie.all
+
+    if movies.count == 0
+      puts "No movies found!"
+      exit 1
+    end
+
+    puts "Updating movies with imdb..."
+
+    movies.each do |movie|
+      next if movie.imdb_id == "" || movie.nil?
+      puts "Updating movie '#{movie.name}' with imdb id '#{movie.imdb_id}'"
+      movie.update_with_imdb
+    end
+  end
 end

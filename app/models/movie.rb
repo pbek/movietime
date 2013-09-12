@@ -3,6 +3,8 @@ class Movie < ActiveRecord::Base
   attr_accessible :poster_url, :rating, :tagline, :trailer_url, :votes, :year
 
   belongs_to :source
+  has_many :movie_genre_assignments, :dependent => :destroy
+  has_many :genres, :through => :movie_genre_assignments
 
   validates :name,
     :presence => true
@@ -70,20 +72,37 @@ class Movie < ActiveRecord::Base
   	result.squeeze(' ').strip
   end
 
+  def update_with_imdb
+    i = Imdb::Movie.new(self.imdb_id)
+    self.update_from_imdb(i)
+    self.save
+  end
+
+  def update_from_imdb(i)
+    self.imdb_id = i.id
+    self.length = i.length
+    self.name = i.title
+    self.plot = i.plot
+    self.plot_summary = i.plot_summary
+    self.plot_synopsis = i.plot_synopsis
+    self.poster_url = i.poster
+    self.rating = i.rating
+    self.tagline = i.tagline
+    self.trailer_url = i.trailer_url
+    self.votes = i.votes
+    self.year = i.year
+    self.save
+
+    # creating and assigning genres
+    i.genres.each do |text|
+      genre = Genre.find_or_create_by_name(text)
+      movie_genre_assignment = MovieGenreAssignment.find_or_create_by_movie_id_and_genre_id(self.id, genre.id)
+    end
+  end
+
   def self.create_from_imdb(i)
     movie = Movie.new
-    movie.imdb_id = i.id
-    movie.length = i.length
-    movie.name = i.title
-    movie.plot = i.plot
-    movie.plot_summary = i.plot_summary
-    movie.plot_synopsis = i.plot_synopsis
-    movie.poster_url = i.poster
-    movie.rating = i.rating
-    movie.tagline = i.tagline
-    movie.trailer_url = i.trailer_url
-    movie.votes = i.votes
-    movie.year = i.year
+    movie.update_from_imdb(i)
     movie
   end
 end

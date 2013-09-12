@@ -11,6 +11,7 @@
     <th><%= sort_link @search, :name, "Name", {:page => params[:page]} %></th>
     <th><%= sort_link @search, :rating, "Rating", {:page => params[:page]} %></th>
     <th><%= sort_link @search, :length, "Length", {:page => params[:page]} %></th>
+    <th>Genres</th>
     <th>Trailer</th>
     <th>Plot Summary</th>
     <th>Poster url</th>
@@ -27,6 +28,11 @@
     <td><%= movie.name %></td>
     <td><%= movie.rating %> (<%= movie.votes %>)</td>
     <td><%= Time.at(movie.length * 60).utc.strftime("%kh %Mmin") %></td>
+    <td>
+      <% movie.genres.each do |genre| %>
+        <span class="label label-info"><i class="icon icon-tag"></i><%= genre.name %></span>
+      <% end %>
+    </td>
     <td>
       <a target="_blank" href="<%= movie.youtube_trailer_url %>">trailer</a>
     </td>

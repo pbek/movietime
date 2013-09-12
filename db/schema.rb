@@ -11,10 +11,25 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130911103222) do
+ActiveRecord::Schema.define(:version => 20130912103033) do
 
   create_table "genres", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "movie_genre_assignments", :force => true do |t|
+    t.integer  "movie_id"
+    t.integer  "genre_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "movie_person_assignments", :force => true do |t|
+    t.integer  "movie_id"
+    t.integer  "person_id"
+    t.integer  "type"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
@@ -62,6 +77,9 @@ ActiveRecord::Schema.define(:version => 20130911103222) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+# Could not dump table "sqlite_stat1" because of following StandardError
+#   Unknown type '' for column 'tbl'
 
   create_table "users", :force => true do |t|
     t.string   "email",                  :default => "", :null => false
