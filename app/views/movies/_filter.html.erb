@@ -13,7 +13,7 @@
           <div class="body">
               <div class="form">
                 <div class="field-box">
-                  <%= f.collection_select :genres_id_in, Genre.find(:all, :order => :name), :id, :name, {}, { :multiple => true } %>
+                  <%= f.collection_select :genres_id_in, Genre.find(:all, :order => :name), :id, :name, {}, { :multiple => true, :style => "width:100%" } %>
                 </div>
               </div>
           </div>

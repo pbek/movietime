@@ -1,3 +1,14 @@
 // Place all the styles related to the movies controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+#movie_list {
+  span.name {
+    font-size: 1.1em;
+    font-weight: bold;
+  }
+  .poster_lightbox img {
+    height: 160px;
+  }
+}
+  

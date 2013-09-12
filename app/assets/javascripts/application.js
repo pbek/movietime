@@ -14,4 +14,5 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require select2
+//= require lightbox 
 //= require_tree .
