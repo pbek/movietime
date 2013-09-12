@@ -35,3 +35,7 @@ group :test do
 end
 
 gem 'imdb'
+gem 'ransack'
+gem 'will_paginate'
+gem 'will_paginate-bootstrap'
+gem 'select2-rails'

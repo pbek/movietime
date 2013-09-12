@@ -2,11 +2,15 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
-    @movies = Movie.all
+    @search = Movie.search(params[:q])
+    @movies_all = @search.result(:distinct => true)
+    @movies = @movies_all.paginate(:page => params[:page])
+    @search.build_condition if @search.conditions.empty?
+    @search.build_sort if @search.sorts.empty?
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @movies }
+      format.json { render json: @movies_all }
     end
   end
 

@@ -2,14 +2,14 @@
 
 <table>
   <tr>
-    <th>Name</th>
-    <th>Rating</th>
-    <th>Length</th>
+    <th><%= sort_link @search, :name, "Name", {:page => params[:page]} %></th>
+    <th><%= sort_link @search, :rating, "Rating", {:page => params[:page]} %></th>
+    <th><%= sort_link @search, :length, "Length", {:page => params[:page]} %></th>
     <th>Trailer</th>
     <th>Plot Summary</th>
     <th>Poster url</th>
     <th>Tagline</th>
-    <th>Year</th>
+    <th><%= sort_link @search, :year, "Year", {:page => params[:page]} %></th>
     <th>Dir</th>
     <th></th>
     <th></th>
