@@ -15,7 +15,7 @@ class Movie < ActiveRecord::Base
     "http://www.youtube.com/results?search_query=#{URI::encode(self.name)}+trailer"
   end
 
-  def self.cleanupDirectoryName(str)
+  def self.cleanup_directory_name(str)
     replacements = [
       [/DVDRip/i, ""],
       [/XviD/i, ""],
