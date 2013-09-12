@@ -1,0 +1,17 @@
+<div id="movie-filter">
+<%= search_form_for @search do |f| %>
+  <%= f.text_field :name_or_plot_cont, :class => "span2 search", :placeholder => "search" %>
+
+  <div class="filter-sep"></div>
+
+  <div style="display:none">
+    <%= f.sort_fields do |s| %>
+      <%= s.sort_select %>
+    <% end %>
+  </div>
+  <%= f.button t(:filter), :type => :submit, :class => 'btn primary' %>
+    <span><%= t(:submit_or) %></span>
+  <%= link_to t(:remove_filter), movies_path, :class => 'reset' %>
+
+<% end %>
+</div>

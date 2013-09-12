@@ -1,5 +1,11 @@
 <h1>Listing movies</h1>
 
+<div class="row">
+  <div class="pull-right">
+    <%= render 'filter', :resource => @search %>
+  </div>
+</div>
+
 <table>
   <tr>
     <th><%= sort_link @search, :name, "Name", {:page => params[:page]} %></th>
