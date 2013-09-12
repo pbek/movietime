@@ -28,9 +28,7 @@
     <td><%= movie.rating %> (<%= movie.votes %>)</td>
     <td><%= Time.at(movie.length * 60).utc.strftime("%kh %Mmin") %></td>
     <td>
-      <% if movie.trailer_url %>
-        <a target="_blank" href="<%= movie.trailer_url %>">trailer</a>
-      <% end %>
+      <a target="_blank" href="<%= movie.youtube_trailer_url %>">trailer</a>
     </td>
     <td><%= h truncate(movie.plot_summary, :length => 80) %></td>
     <td>
