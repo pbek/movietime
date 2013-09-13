@@ -1,24 +1,19 @@
 class Movie < ActiveRecord::Base
   attr_accessible :imdb_id, :directory_name, :source_id, :length, :name, :plot, :plot_summary, :plot_synopsis
-  attr_accessible :poster_url, :rating, :tagline, :trailer_url, :votes, :year
+  attr_accessible :poster_url, :rating, :tagline, :trailer_url, :votes, :year, :director_id
 
   belongs_to :source
+  belongs_to :director
+
   has_many :movie_genre_assignments, :dependent => :destroy
   has_many :genres, :through => :movie_genre_assignments
-  has_many :movie_person_assignments, :dependent => :destroy
-  has_many :people, :through => :movie_person_assignments
 
-  has_many :cast_members, :conditions => {"movie_person_assignments.assignment_type" => MoviePersonAssignment::TYPE_CAST_MEMBER}, :through => :movie_person_assignments, :primary_key => :person_id, :source => :person
-  has_many :directors, :conditions => {"movie_person_assignments.assignment_type" => MoviePersonAssignment::TYPE_DIRECTOR}, :through => :movie_person_assignments, :primary_key => :person_id, :source => :person
-  # has_many :cast_members, -> { where "type = #{MoviePersonAssignment::TYPE_CAST_MEMBER}" }, :through => :movie_person_assignments, :primary_key => :person_id, class_name: "Person"
-  # has_one :director, -> { where "type = #{MoviePersonAssignment::TYPE_DIRECTOR}" }, :through => :movie_person_assignments, :primary_key => :person_id, class_name: "Person"
+  has_many :movie_cast_member_assignments, :dependent => :destroy
+  has_many :cast_members, :through => :movie_cast_member_assignments
 
   validates :name,
     :presence => true
 
-  def director
-    self.directors.first
-  end
 
   def full_path
     "#{self.source.path}/#{self.directory_name}"
@@ -128,7 +123,7 @@ class Movie < ActiveRecord::Base
 
     # remove old movie_genre_assignments
     self.movie_genre_assignments.each do |movie_genre_assignment|
-      movie_genre_assignments.delete
+      movie_genre_assignment.delete
     end
 
     # creating and assigning genres
@@ -137,20 +132,19 @@ class Movie < ActiveRecord::Base
       MovieGenreAssignment.find_or_create_by_movie_id_and_genre_id(self.id, genre.id)
     end
 
-    # remove old movie_person_assignments
-    self.movie_person_assignments.each do |movie_person_assignments|
-      movie_person_assignments.delete
+    # remove old movie_cast_member_assignments
+    self.movie_cast_member_assignments.each do |movie_cast_member_assignment|
+      movie_cast_member_assignment.delete
     end
 
-    # creating and assigning cast
+    # creating and assigning cast members
     i.cast_members.each do |text|
-      person = Person.find_or_create_by_name(text)
-      MoviePersonAssignment.find_or_create_by_movie_id_and_person_id_and_assignment_type(self.id, person.id, MoviePersonAssignment::TYPE_CAST_MEMBER)
+      cast_member = CastMember.find_or_create_by_name(text)
+      MovieCastMemberAssignment.find_or_create_by_movie_id_and_cast_member_id(self.id, cast_member.id)
     end
 
     # creating and assigning director
-    person = Person.find_or_create_by_name(i.director)
-    MoviePersonAssignment.find_or_create_by_movie_id_and_person_id_and_assignment_type(self.id, person.id, MoviePersonAssignment::TYPE_DIRECTOR)
+    self.director = Director.find_or_create_by_name(i.director[0])
   end
 
   def self.create_from_imdb(i)
