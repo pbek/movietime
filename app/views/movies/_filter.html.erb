@@ -9,6 +9,60 @@
       <div class="body">
         <div class="form">
           <div class="field-box">
+            <%= f.collection_select :directors_id_in, Person.find(:all, :order => :name), :id, :name, {}, { :style => "width:100%" } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="filter-sep"></div>
+
+  <div class="ui-dropdown">
+    <div class="dialog">
+      <div class="pointer">
+        <div class="arrow"></div>
+        <div class="arrow_border"></div>
+      </div>
+      <div class="body">
+        <div class="form">
+          <div class="field-box">
+            <%= f.collection_select :cast_members_id_in, Person.find(:all, :order => :name), :id, :name, {}, { :multiple => true, :style => "width:100%" } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="filter-sep"></div>
+
+  <div class="ui-dropdown">
+    <div class="dialog">
+      <div class="pointer">
+        <div class="arrow"></div>
+        <div class="arrow_border"></div>
+      </div>
+      <div class="body">
+        <div class="form">
+          <div class="field-box">
+            <%= f.collection_select :source_id_in, Source.find(:all, :order => :name), :id, :name, {}, { :multiple => true, :style => "width:100%" } %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="filter-sep"></div>
+
+  <div class="ui-dropdown">
+    <div class="dialog">
+      <div class="pointer">
+        <div class="arrow"></div>
+        <div class="arrow_border"></div>
+      </div>
+      <div class="body">
+        <div class="form">
+          <div class="field-box">
             <%= f.collection_select :genres_id_in, Genre.find(:all, :order => :name), :id, :name, {}, { :multiple => true, :style => "width:100%" } %>
           </div>
         </div>

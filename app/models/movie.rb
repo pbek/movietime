@@ -5,9 +5,20 @@ class Movie < ActiveRecord::Base
   belongs_to :source
   has_many :movie_genre_assignments, :dependent => :destroy
   has_many :genres, :through => :movie_genre_assignments
+  has_many :movie_person_assignments, :dependent => :destroy
+  has_many :people, :through => :movie_person_assignments
+
+  has_many :cast_members, :conditions => {"movie_person_assignments.assignment_type" => MoviePersonAssignment::TYPE_CAST_MEMBER}, :through => :movie_person_assignments, :primary_key => :person_id, :source => :person
+  has_many :directors, :conditions => {"movie_person_assignments.assignment_type" => MoviePersonAssignment::TYPE_DIRECTOR}, :through => :movie_person_assignments, :primary_key => :person_id, :source => :person
+  # has_many :cast_members, -> { where "type = #{MoviePersonAssignment::TYPE_CAST_MEMBER}" }, :through => :movie_person_assignments, :primary_key => :person_id, class_name: "Person"
+  # has_one :director, -> { where "type = #{MoviePersonAssignment::TYPE_DIRECTOR}" }, :through => :movie_person_assignments, :primary_key => :person_id, class_name: "Person"
 
   validates :name,
     :presence => true
+
+  def director
+    self.directors.first
+  end
 
   def full_path
     "#{self.source.path}/#{self.directory_name}"
@@ -37,6 +48,8 @@ class Movie < ActiveRecord::Base
       [/DVD/i, ""],
       [/R5/, ""],
       [/MP3/i, ""],
+      [/Gogo/i, ""],
+      [/BiTo/i, ""],
       [/HDSi/i, ""],
       [/UNRATED/i, ""],
       [/CoWRY/i, ""],
@@ -44,7 +57,27 @@ class Movie < ActiveRecord::Base
       [/E.Sub/i, ""],
       [/www.mastitorrents.com/i, ""],
       [/torrents/i, ""],
+      [/GreatMagician/i, ""],
+      [/Release/i, ""],
+      [/Kingdom/i, ""],
+      [/anoXmous/i, ""],
+      [/BluRay/i, ""],
       [/GCJM/i, ""],
+      [/MitZep/i, ""],
+      [/PhoenixRG/i, ""],
+      [/RETAIL/i, ""],
+      [/german/i, ""],
+      [/448p/i, ""],
+      [/pinki/i, ""],
+      [/Audio/i, ""],
+      [/DD5/i, ""],
+      [/5\.1/i, ""],
+      [/Subs/i, ""],
+      [/ Eng/, ""],
+      [/ EN/, ""],
+      [/ NL/, ""],
+      [/Jap\./i, ""],
+      [/Recalled2Life/i, ""],
       [/dual audio/i, ""],
       [/_sujaidr/i, ""],
       [/Directors Cut/i, ""],
@@ -93,11 +126,31 @@ class Movie < ActiveRecord::Base
     self.year = i.year
     self.save
 
+    # remove old movie_genre_assignments
+    self.movie_genre_assignments.each do |movie_genre_assignment|
+      movie_genre_assignments.delete
+    end
+
     # creating and assigning genres
     i.genres.each do |text|
       genre = Genre.find_or_create_by_name(text)
-      movie_genre_assignment = MovieGenreAssignment.find_or_create_by_movie_id_and_genre_id(self.id, genre.id)
+      MovieGenreAssignment.find_or_create_by_movie_id_and_genre_id(self.id, genre.id)
     end
+
+    # remove old movie_person_assignments
+    self.movie_person_assignments.each do |movie_person_assignments|
+      movie_person_assignments.delete
+    end
+
+    # creating and assigning cast
+    i.cast_members.each do |text|
+      person = Person.find_or_create_by_name(text)
+      MoviePersonAssignment.find_or_create_by_movie_id_and_person_id_and_assignment_type(self.id, person.id, MoviePersonAssignment::TYPE_CAST_MEMBER)
+    end
+
+    # creating and assigning director
+    person = Person.find_or_create_by_name(i.director)
+    MoviePersonAssignment.find_or_create_by_movie_id_and_person_id_and_assignment_type(self.id, person.id, MoviePersonAssignment::TYPE_DIRECTOR)
   end
 
   def self.create_from_imdb(i)
