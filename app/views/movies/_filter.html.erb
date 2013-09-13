@@ -1,23 +1,19 @@
 <div id="movie-filter">
 <%= search_form_for @search do |f| %>
   <div class="ui-dropdown">
-      <div class="head">
-          genres
-          <i class="arrow-up"></i>
+    <div class="dialog">
+      <div class="pointer">
+        <div class="arrow"></div>
+        <div class="arrow_border"></div>
       </div>
-      <div class="dialog">
-          <div class="pointer">
-              <div class="arrow"></div>
-              <div class="arrow_border"></div>
+      <div class="body">
+        <div class="form">
+          <div class="field-box">
+            <%= f.collection_select :genres_id_in, Genre.find(:all, :order => :name), :id, :name, {}, { :multiple => true, :style => "width:100%" } %>
           </div>
-          <div class="body">
-              <div class="form">
-                <div class="field-box">
-                  <%= f.collection_select :genres_id_in, Genre.find(:all, :order => :name), :id, :name, {}, { :multiple => true, :style => "width:100%" } %>
-                </div>
-              </div>
-          </div>
+        </div>
       </div>
+    </div>
   </div>
 
   <div class="filter-sep"></div>
@@ -30,9 +26,8 @@
       <%= s.sort_select %>
     <% end %>
   </div>
-  <%= f.button t(:filter), :type => :submit, :class => 'btn primary' %>
-    <span><%= t(:submit_or) %></span>
+  <%= f.button '<i class="icon-filter"></i> Filter'.html_safe, :type => :submit, :class => 'btn primary' %>
+    <span>or</span>
   <%= link_to t(:remove_filter), movies_path, :class => 'reset' %>
-
 <% end %>
 </div>
