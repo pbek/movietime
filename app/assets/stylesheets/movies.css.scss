@@ -7,9 +7,33 @@
     font-size: 1.1em;
     font-weight: bold;
   }
+
   .poster_lightbox img {
     height: 160px;
     max-width: inherit;
+  }
+
+  .nav {
+    margin-bottom: 5px;
+  }
+
+  .tab-content {
+    margin-bottom: 10px;
+  }
+
+  .nav-tabs > li > a {
+    line-height: 1em;
+    font-size: 0.8em;
+    padding: 4px;
+  }
+
+  .plot {
+    font-size: 0.8em;
+  }
+
+  .cast-members .label {
+    font-size: 0.8em;
+    font-weight: normal;
   }
 }
 

@@ -25,7 +25,7 @@
   </tr>
 
 <% @movies.each do |movie| %>
-  <tr>
+  <tr valign="top">
     <td>
       <% if movie.poster_url %>
         <!-- <a href="<%= movie.poster_url %>"><img src="<%= movie.poster_url %>" alt="<%= movie.name %>" style="height: 100px;" rel="lightbox" / ></a> -->
@@ -34,21 +34,18 @@
     </td>
     <td colspan="4">
       <div class="title">
-        <span class="name"><%= movie.name %></span> (<%= movie.year %>) <a target="_blank" href="<%= movie.youtube_trailer_url %>"><i class="icon icon-film"></i></a>
+        <span class="name"><%= movie.name %></span> (<%= movie.year %>) <a <span data-toggle="tooltip" title="YouTube Trailers" target="_blank" href="<%= movie.youtube_trailer_url %>"><i class="icon icon-film"></i></a>
       </div>
       <div class="tagline">
         <small><%= movie.tagline.html_safe unless movie.tagline.nil? %></small>
       </div>
       <div class="lenght">
-        <%= Time.at(movie.length * 60).utc.strftime("%kh %Mmin") %> - <i class="icon icon-star-empty"></i> <%= movie.rating %> <small>(<%= movie.votes %>)</small>
+        <%= Time.at(movie.length * 60).utc.strftime("%kh %Mmin") %> - <i class="icon icon-star-empty"></i> <span data-toggle="tooltip" title="<%= movie.votes %> votes"><%= movie.rating %></span> - <span data-toggle="tooltip" title="director"><%= movie.director.name %></span>
       </div>
       <div class="genres">
         <% movie.genres.each do |genre| %>
           <span class="label label-info"><%= genre.name %></span>
         <% end %>
-      </div>
-      <div class="plot_sumary">
-        <small><%= h truncate(movie.plot_summary, :length => 300) %></small>
       </div>
       <div class="operators">
         <a target="_blank" href="file://<%= movie.full_path %>"><i class="icon icon-folder-open"></i></a>
@@ -57,9 +54,32 @@
         <%= link_to '<i class="icon icon-remove"></i>'.html_safe, movie, method: :delete, data: { confirm: 'Are you sure?' } %>
       </div>
     </td>
-    <td><%= movie.plot unless movie.plot.nil? %></td>
+    <td>
+      <ul class="movie_tabs nav nav-tabs">
+        <li class="active"><a href="#movie<%= movie.id %>-plot">Plot</a></li>
+        <li><a href="#movie<%= movie.id %>-plot-summary">Plot Summary</a></li>
+        <li><a href="#movie<%= movie.id %>-plot-synopsis">Plot Synopsis</a></li>
+        <li><a href="#movie<%= movie.id %>-cast">Cast</a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane plot active" id="movie<%= movie.id %>-plot"><%= movie.plot unless movie.plot.nil? %></div>
+        <div class="tab-pane plot" id="movie<%= movie.id %>-plot-summary"><%= movie.plot_summary unless movie.plot_summary.nil? %></div>
+        <div class="tab-pane plot" id="movie<%= movie.id %>-plot-synopsis"><%= movie.plot_synopsis unless movie.plot_synopsis.nil? %></div>
+        <div class="tab-pane cast-members" id="movie<%= movie.id %>-cast">
+          <% movie.cast_members.each do |cast_member| %>
+            <span class="label"><%= cast_member.name %></span>
+          <% end %>
+        </div>
+      </div>
+    </td>
   </tr>
 <% end %>
 </table>
 
 <%= will_paginate @movies, :renderer => BootstrapPagination::Rails, :previous_label => "&#8249;", :next_label => "&#8250;" %>
+
+<script>
+  $(function () {
+    $('#myTab a:last').tab('show')
+  })
+</script>

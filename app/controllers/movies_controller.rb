@@ -4,7 +4,7 @@ class MoviesController < ApplicationController
   def index
     @search = Movie.search(params[:q])
     @movies_all = @search.result(:distinct => true)
-    @movies = @movies_all.paginate(:page => params[:page], :per_page => 10)
+    @movies = @movies_all.paginate(:page => params[:page], :per_page => 15)
     @search.build_condition if @search.conditions.empty?
     @search.build_sort if @search.sorts.empty?
 
