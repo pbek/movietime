@@ -2,6 +2,15 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
+    # puts params[:q].inspect
+
+    unless params[:q].nil?
+      # puts params[:q][:cast_members_id_in].inspect
+      params[:q][:cast_members_id_in] = params[:q][:cast_members_id_in][0].split(",")
+      params[:q][:cast_members_id_in].map!{|item| item.gsub(/\[/, '').gsub(/\]/, '')}
+      # puts params[:q][:cast_members_id_in].inspect
+    end
+  
     @search = Movie.search(params[:q])
     @movies_all = @search.result(:distinct => true)
     @movies = @movies_all.paginate(:page => params[:page], :per_page => 15)
