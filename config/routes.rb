@@ -1,15 +1,8 @@
 Movietime::Application.routes.draw do
-  resources :people
-
-
+  resources :cast_members
   resources :genres
-
-
   resources :sources
-
-
   resources :movies
-
 
   authenticated :user do
     root :to => 'home#index'

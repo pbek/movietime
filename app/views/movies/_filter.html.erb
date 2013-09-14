@@ -10,7 +10,7 @@
         <div class="body">
           <div class="form">
             <div class="field-box">
-              <%= f.collection_select :director_id_in, Director.find(:all, :order => :name), :id, :name, {}, { :multiple => true, :style => "width:100%" } %>
+              <%= f.collection_select :director_id_in, Director.find(:all, :order => :name), :id, :name, {}, { :multiple => true, :style => "width:100%", :class => "select2", data: { placeholder: 'director' } } %>
             </div>
           </div>
         </div>
@@ -28,7 +28,9 @@
         <div class="body">
           <div class="form">
             <div class="field-box">
-              <%= f.collection_select :cast_members_id_in, CastMember.find(:all, :order => :name), :id, :name, {}, { :multiple => true, :style => "width:100%" } %>
+              <%= f.hidden_field :cast_members_id_in, class: 'select2 ajax', :multiple => true, :style => "width:100%", data: { placeholder: 'cast members', source: cast_members_path, multiple: true } %>
+              <%#= f.collection_select :cast_members_id_in, {}, :id, :name, {}, { :multiple => true, :style => "width:100%", :class => "select2 ajax", data: { placeholder: 'cast members', source: 'cast_members_path' } } %>
+              <%#= f.collection_select :cast_members_id_in, CastMember.find(:all, :order => :name), :id, :name, {}, { :multiple => true, :style => "width:100%", :class => "select2", data: { placeholder: 'cast members', source: 'cast_members_path' } } %>
             </div>
           </div>
         </div>
