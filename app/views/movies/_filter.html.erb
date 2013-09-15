@@ -10,7 +10,8 @@
         <div class="body">
           <div class="form">
             <div class="field-box">
-              <%= f.collection_select :director_id_in, Director.find(:all, :order => :name), :id, :name, {}, { :multiple => true, :style => "width:100%", :class => "select2", data: { placeholder: 'director' } } %>
+              <%= f.hidden_field :director_id_in, class: 'select2 ajax', :multiple => true, :style => "width:100%", data: { placeholder: 'director', source: directors_path, multiple: true } %>
+              <%#= f.collection_select :director_id_in, Director.find(:all, :order => :name), :id, :name, {}, { :multiple => true, :style => "width:100%", :class => "select2", data: { placeholder: 'director' } } %>
             </div>
           </div>
         </div>

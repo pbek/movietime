@@ -1,5 +1,6 @@
 Movietime::Application.routes.draw do
   resources :cast_members
+  resources :directors
   resources :genres
   resources :sources
   resources :movies
