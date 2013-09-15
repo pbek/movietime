@@ -2,13 +2,17 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
-    # puts params[:q].inspect
-
+    # fixes for select2 ajax multiselect
     unless params[:q].nil?
-      # puts params[:q][:cast_members_id_in].inspect
-      params[:q][:cast_members_id_in] = params[:q][:cast_members_id_in][0].split(",")
-      params[:q][:cast_members_id_in].map!{|item| item.gsub(/\[/, '').gsub(/\]/, '')}
-      # puts params[:q][:cast_members_id_in].inspect
+      unless params[:q][:director_id_in].nil?
+        params[:q][:director_id_in] = params[:q][:director_id_in][0].split(",")
+        params[:q][:director_id_in].map!{|item| item.gsub(/\[/, '').gsub(/\]/, '')}
+      end
+
+      unless params[:q][:cast_members_id_in].nil?
+        params[:q][:cast_members_id_in] = params[:q][:cast_members_id_in][0].split(",")
+        params[:q][:cast_members_id_in].map!{|item| item.gsub(/\[/, '').gsub(/\]/, '')}
+      end
     end
   
     @search = Movie.search(params[:q])
