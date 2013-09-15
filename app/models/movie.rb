@@ -68,6 +68,7 @@ class Movie < ActiveRecord::Base
       [/DD5/i, ""],
       [/5\.1/i, ""],
       [/Subs/i, ""],
+      [/nlx/i, ""],
       [/LiMiTED/i, ""],
       [/ Eng/, ""],
       [/ EN/, ""],
