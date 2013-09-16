@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130913182417) do
+ActiveRecord::Schema.define(:version => 20130916060500) do
 
   create_table "cast_members", :force => true do |t|
     t.string   "name"
@@ -21,6 +21,14 @@ ActiveRecord::Schema.define(:version => 20130913182417) do
 
   create_table "directors", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "directory_name_cleanup_patterns", :force => true do |t|
+    t.string   "pattern"
+    t.string   "replace"
+    t.integer  "priority"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

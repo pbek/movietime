@@ -1,0 +1,27 @@
+<h1>Listing directory_name_cleanup_patterns</h1>
+
+<table>
+  <tr>
+    <th>Pattern</th>
+    <th>Replace</th>
+    <th>Priority</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @directory_name_cleanup_patterns.each do |directory_name_cleanup_pattern| %>
+  <tr>
+    <td><%= directory_name_cleanup_pattern.pattern %></td>
+    <td><%= directory_name_cleanup_pattern.replace %></td>
+    <td><%= directory_name_cleanup_pattern.priority %></td>
+    <td><%= link_to 'Show', directory_name_cleanup_pattern %></td>
+    <td><%= link_to 'Edit', edit_directory_name_cleanup_pattern_path(directory_name_cleanup_pattern) %></td>
+    <td><%= link_to 'Destroy', directory_name_cleanup_pattern, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Directory name cleanup pattern', new_directory_name_cleanup_pattern_path %>

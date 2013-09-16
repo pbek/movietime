@@ -1,0 +1,13 @@
+<%= simple_form_for(@directory_name_cleanup_pattern) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :pattern %>
+    <%= f.input :replace %>
+    <%= f.input :priority %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

@@ -1,4 +1,7 @@
 Movietime::Application.routes.draw do
+  resources :directory_name_cleanup_patterns
+
+
   resources :cast_members
   resources :directors
   resources :genres

@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Pattern:</b>
+  <%= @directory_name_cleanup_pattern.pattern %>
+</p>
+
+<p>
+  <b>Replace:</b>
+  <%= @directory_name_cleanup_pattern.replace %>
+</p>
+
+<p>
+  <b>Priority:</b>
+  <%= @directory_name_cleanup_pattern.priority %>
+</p>
+
+
+<%= link_to 'Edit', edit_directory_name_cleanup_pattern_path(@directory_name_cleanup_pattern) %> |
+<%= link_to 'Back', directory_name_cleanup_patterns_path %>
