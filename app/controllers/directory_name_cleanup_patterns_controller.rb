@@ -4,6 +4,8 @@ class DirectoryNameCleanupPatternsController < ApplicationController
   def index
     @directory_name_cleanup_patterns = DirectoryNameCleanupPattern.all
 
+    # puts DirectoryNameCleanupPattern::clean("A Film XVid").inspect
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @directory_name_cleanup_patterns }

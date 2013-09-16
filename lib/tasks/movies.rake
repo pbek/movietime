@@ -22,7 +22,7 @@ namespace :movies do
         next unless Movie.find_by_directory_name_and_source_id(directory, source.id).nil?
 
         puts "\n\n- found new directory '#{directory}'"
-        clean_name = Movie::cleanup_directory_name(directory)
+        clean_name = DirectoryNameCleanupPattern::cleanup(directory)
         puts "  - searching for movie '#{clean_name}'"
 
         i = Imdb::Search.new(clean_name)
