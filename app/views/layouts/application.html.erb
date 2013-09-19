@@ -5,7 +5,9 @@
     <title><%= content_for?(:title) ? yield(:title) : "Movietime" %></title>
     <meta name="description" content="<%= content_for?(:description) ? yield(:description) : "Movietime" %>">
     <%= stylesheet_link_tag "application", :media => "all" %>
+    <%= stylesheet_link_tag "lightbox", :media => "all" %>
     <%= javascript_include_tag "application" %>
+    <%= javascript_include_tag "lightbox-2.6.min" %>
     <%= csrf_meta_tags %>
     <%= yield(:head) %>
   </head>

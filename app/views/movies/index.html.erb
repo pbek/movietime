@@ -28,8 +28,7 @@
   <tr valign="top">
     <td>
       <% if movie.poster_url %>
-        <!-- <a href="<%= movie.poster_url %>"><img src="<%= movie.poster_url %>" alt="<%= movie.name %>" style="height: 100px;" rel="lightbox" / ></a> -->
-        <%= lightbox_tag(movie.poster_url, movie.poster_url, title=movie.name, collection="movies", html_options = {:class => "poster_lightbox"}) %>
+        <a title="<%= movie.name %> (<%= movie.year %>) - <%= Time.at(movie.length * 60).utc.strftime("%kh %Mmin") %> - imdb <%= movie.rating %>" class="poster_lightbox" href="<%= movie.poster_url %>" data-lightbox="movies"><img src="<%= movie.poster_url %>" alt="<%= movie.name %>" /></a>
       <% end %>
     </td>
     <td colspan="4">
@@ -78,8 +77,9 @@
 
 <%= will_paginate @movies, :renderer => BootstrapPagination::Rails, :previous_label => "&#8249;", :next_label => "&#8250;" %>
 
-<script>
-  $(function () {
-    $('#myTab a:last').tab('show')
-  })
-</script>
+<div id="demoLightbox" class="lightbox hide fade"  tabindex="-1" role="dialog">
+  <div class='lightbox-content'>
+    <img src="<%= @movies[0].poster_url %>" alt="" />
+    <div class="lightbox-caption"><p>Your caption here</p></div>
+  </div>
+</div>
