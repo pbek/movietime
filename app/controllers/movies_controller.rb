@@ -2,6 +2,9 @@ class MoviesController < ApplicationController
   # GET /movies
   # GET /movies.json
   def index
+    @end_time_hour = 21
+    @end_time_minute = 30
+
     # fixes for select2 ajax multiselect
     unless params[:q].nil?
       unless params[:q][:director_id_in].nil?
@@ -13,9 +16,20 @@ class MoviesController < ApplicationController
         params[:q][:cast_members_id_in] = params[:q][:cast_members_id_in][0].split(",")
         params[:q][:cast_members_id_in].map!{|item| item.gsub(/\[/, '').gsub(/\]/, '')}
       end
+
+      unless params[:q][:end_time_hour].nil?
+        @end_time_hour = params[:q][:end_time_hour].to_i
+      end
+
+      unless params[:q][:end_time_minute].nil?
+        @end_time_minute = params[:q][:end_time_minute].to_i
+      end
     end
-  
-    @search = Movie.search(params[:q])
+    
+    max_length = (Date.today.to_time.to_i + @end_time_hour * 3600 + @end_time_minute * 60 - DateTime.now.to_i) / 60
+
+    @search = Movie.where("movies.length <= ?", max_length)
+    @search = @search.search(params[:q])
     @movies_all = @search.result(:distinct => true)
     @movies = @movies_all.paginate(:page => params[:page], :per_page => 15)
     @search.build_condition if @search.conditions.empty?

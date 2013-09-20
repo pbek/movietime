@@ -1,4 +1,4 @@
-<h1>Listing movies</h1>
+<h1>Listing movies (<%= @movies_all.count %>)</h1>
 
 <div class="row">
   <div class="pull-right">
@@ -76,10 +76,3 @@
 </table>
 
 <%= will_paginate @movies, :renderer => BootstrapPagination::Rails, :previous_label => "&#8249;", :next_label => "&#8250;" %>
-
-<div id="demoLightbox" class="lightbox hide fade"  tabindex="-1" role="dialog">
-  <div class='lightbox-content'>
-    <img src="<%= @movies[0].poster_url %>" alt="" />
-    <div class="lightbox-caption"><p>Your caption here</p></div>
-  </div>
-</div>

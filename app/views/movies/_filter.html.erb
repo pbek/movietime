@@ -77,6 +77,12 @@
   </div>
 
   <div class="filter-block">
+    <span>end time:</span>
+    <%= select_tag "q[end_time_hour]", options_for_select((0..23).collect{ |i| ["%02d" % i, i] }, @end_time_hour), :class => "time-select" %>:
+    <%= select_tag "q[end_time_minute]", options_for_select([0, 15, 30, 45].collect{ |i| ["%02d" % i, i] }, @end_time_minute), :class => "time-select" %>
+  </div>
+
+  <div class="filter-block">
     <%= f.button '<i class="icon-filter"></i> Filter'.html_safe, :type => :submit, :class => 'btn primary' %>
       <span>or</span>
     <%= link_to t(:remove_filter), movies_path, :class => 'reset' %>
