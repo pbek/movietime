@@ -14,6 +14,9 @@ class Movie < ActiveRecord::Base
   validates :name,
     :presence => true
 
+  amoeba do
+    enable
+  end
 
   def full_path
     "#{self.source.path}/#{self.directory_name}"

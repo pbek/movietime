@@ -19,7 +19,19 @@ namespace :movies do
       puts "Scanning directory '#{source.path}' for source '#{source.name}'"
       directories = Dir.entries(source.path).select {|entry| File.directory? File.join(source.path,entry) and !(entry =='.' || entry == '..') }
       directories.each do |directory|
+        # movie with same directory name and source was found
         next unless Movie.find_by_directory_name_and_source_id(directory, source.id).nil?
+
+        movie = Movie.find_by_directory_name(directory)
+        # movie with same diretory name was found
+        if !movie.nil?
+          # clone the found movie and save it with new source id
+          new_movie = movie.amoeba_dup
+          new_movie.source_id = source.id
+          new_movie.save
+          puts "- cloned movie '#{movie.name}' in directory '#{directory}' from source '#{source.name}'"
+          next
+        end
 
         puts "\n\n- found new directory '#{directory}'"
         clean_name = DirectoryNameCleanupPattern::cleanup(directory)
