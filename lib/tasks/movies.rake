@@ -15,12 +15,21 @@ namespace :movies do
     puts "\e[H\e[2J"
     puts "Searching for movies..."
 
+    global_deleted_movie_ids = []
+
     sources.each do |source|
       puts "Scanning directory '#{source.path}' for source '#{source.name}'"
       directories = Dir.entries(source.path).select {|entry| File.directory? File.join(source.path,entry) and !(entry =='.' || entry == '..') }
+
+      movie_id_list = []
       directories.each do |directory|
+
         # movie with same directory name and source was found
-        next unless Movie.find_by_directory_name_and_source_id(directory, source.id).nil?
+        movie = Movie.find_by_directory_name_and_source_id(directory, source.id)
+        if ( !movie.nil? )
+          movie_id_list << movie.id
+          next
+        end
 
         movie = Movie.find_by_directory_name(directory)
         # movie with same diretory name was found
@@ -29,6 +38,7 @@ namespace :movies do
           new_movie = movie.amoeba_dup
           new_movie.source_id = source.id
           new_movie.save
+          movie_id_list << new_movie.id
           puts "- cloned movie '#{movie.name}' in directory '#{directory}' from source '#{source.name}'"
           next
         end
@@ -56,7 +66,22 @@ namespace :movies do
         movie.directory_name = directory
         movie.source = source
         movie.save
+        movie_id_list << movie.id
       end
+
+      # get the ids of all available movies
+      all_movie_ids = Movie.find_all_by_source_id(source.id).map(&:id)
+
+      # get all ids of movies that were removed from the filesystem (or were moved)
+      deleted_movie_ids = all_movie_ids - movie_id_list
+      global_deleted_movie_ids += deleted_movie_ids
+    end
+
+    # remove all movies that were removed from the filesystem
+    global_deleted_movie_ids.each do |movie_id|
+      movie = Movie.find_by_id(movie_id)
+      puts "- removing deleted movie '#{movie.name}' from database"
+      movie.destroy
     end
   end
 

@@ -26,6 +26,10 @@ class Movie < ActiveRecord::Base
     "http://www.youtube.com/results?search_query=#{URI::encode(self.name)}+trailer"
   end
 
+  def imdb_url
+    "http://www.imdb.com/title/tt#{self.imdb_id}"
+  end
+
   def update_with_imdb
     i = Imdb::Movie.new(self.imdb_id)
     self.update_from_imdb(i)

@@ -13,6 +13,7 @@
     <col />
     <col />
     <col />
+    <col />
     <col width="400" />
   </colgroup>
   <tr>
@@ -21,6 +22,7 @@
     <th><%= sort_link @search, :rating, "Rating", {:page => params[:page]} %></th>
     <th><%= sort_link @search, :length, "Length", {:page => params[:page]} %></th>
     <th><%= sort_link @search, :year, "Year", {:page => params[:page]} %></th>
+    <th><%= sort_link @search, :created_at, "Created", {:page => params[:page]} %></th>
     <th></th>
   </tr>
 
@@ -31,9 +33,12 @@
         <a title="<%= movie.name %> (<%= movie.year %>) - <%= Time.at(movie.length * 60).utc.strftime("%kh %Mmin") %> - imdb <%= movie.rating %>" class="poster_lightbox" href="<%= movie.poster_url %>" data-lightbox="movies"><img src="<%= movie.poster_url %>" alt="<%= movie.name %>" /></a>
       <% end %>
     </td>
-    <td colspan="4">
+    <td colspan="5">
       <div class="title">
-        <span class="name"><%= movie.name %></span> (<%= movie.year %>) <a <span data-toggle="tooltip" title="YouTube Trailers" target="_blank" href="<%= movie.youtube_trailer_url %>"><i class="icon icon-film"></i></a>
+        <span class="name"><%= movie.name %></span>
+        (<%= movie.year %>)
+        <a data-toggle="tooltip" title="YouTube trailers" target="_blank" href="<%= movie.youtube_trailer_url %>"><i class="icon icon-film"></i></a>
+        <a data-toggle="tooltip" title="IMDB page" target="_blank" href="<%= movie.imdb_url %>"><i class="icon icon-info-sign"></i></a>
       </div>
       <div class="tagline">
         <small><%= movie.tagline.html_safe unless movie.tagline.nil? %></small>

@@ -5,6 +5,8 @@ class MoviesController < ApplicationController
     @end_time_hour = 21
     @end_time_minute = 30
 
+    puts params
+
     # fixes for select2 ajax multiselect
     unless params[:q].nil?
       unless params[:q][:director_id_in].nil?
@@ -24,6 +26,8 @@ class MoviesController < ApplicationController
       unless params[:q][:end_time_minute].nil?
         @end_time_minute = params[:q][:end_time_minute].to_i
       end
+    else
+      params[:q] = {"source_id_in" => [1], "s" => "created_at desc"}
     end
     
     max_length = (Date.today.to_time.to_i + @end_time_hour * 3600 + @end_time_minute * 60 - DateTime.now.to_i) / 60
