@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130916060500) do
+ActiveRecord::Schema.define(:version => 20141019194252) do
 
   create_table "cast_members", :force => true do |t|
     t.string   "name"
@@ -65,12 +65,16 @@ ActiveRecord::Schema.define(:version => 20130916060500) do
     t.string   "poster_url"
     t.string   "tagline"
     t.integer  "year"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
     t.string   "directory_name"
     t.integer  "source_id"
     t.string   "imdb_id"
     t.integer  "director_id"
+    t.string   "poster_image_file_name"
+    t.string   "poster_image_content_type"
+    t.integer  "poster_image_file_size"
+    t.datetime "poster_image_updated_at"
   end
 
   create_table "roles", :force => true do |t|

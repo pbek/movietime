@@ -105,4 +105,28 @@ namespace :movies do
       movie.update_with_imdb
     end
   end
+
+  #
+  # usage: rake movies:fetch_missing_images
+  #
+  desc "Fetching all missing images"
+  task :fetch_missing_images => :environment do |t, args|
+    movies = Movie.all
+
+    if movies.count == 0
+      puts "No movies found!"
+      exit 1
+    end
+
+    puts "Fetching all missing images..."
+
+    movies.each do |movie|
+      next if movie.poster_image.exists?
+      next if !movie.poster_url
+
+      puts "Updating poster image of movie '#{movie.name}'"
+      movie.poster_image = open(movie.poster_url)
+      movie.save
+    end
+  end
 end

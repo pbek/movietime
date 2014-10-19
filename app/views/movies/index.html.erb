@@ -29,7 +29,9 @@
 <% @movies.each do |movie| %>
   <tr valign="top">
     <td>
-      <% if movie.poster_url %>
+      <% if movie.poster_image.exists? %>
+        <a title="<%= movie.name %> (<%= movie.year %>) - <%= Time.at(movie.length * 60).utc.strftime("%kh %Mmin") %> - imdb <%= movie.rating %>" class="poster_lightbox" href="<%= movie.poster_image.url(:fullscreen) %>" data-lightbox="movies"><%= image_tag movie.poster_image.url(:small) %></a>
+      <% elsif movie.poster_url %>
         <a title="<%= movie.name %> (<%= movie.year %>) - <%= Time.at(movie.length * 60).utc.strftime("%kh %Mmin") %> - imdb <%= movie.rating %>" class="poster_lightbox" href="<%= movie.poster_url %>" data-lightbox="movies"><img src="<%= movie.poster_url %>" alt="<%= movie.name %>" /></a>
       <% end %>
     </td>

@@ -1,6 +1,8 @@
 class Movie < ActiveRecord::Base
   attr_accessible :imdb_id, :directory_name, :source_id, :length, :name, :plot, :plot_summary, :plot_synopsis
   attr_accessible :poster_url, :rating, :tagline, :trailer_url, :votes, :year, :director_id
+  has_attached_file :poster_image, :styles => { :fullscreen => "1280x1280>", :small => "113x160>" }, :default_url => "/images/:style/missing.png"
+  validates_attachment_content_type :poster_image, :content_type => ["image/jpg", "image/jpeg", "image/png", "image/gif"]
 
   belongs_to :source
   belongs_to :director
@@ -44,6 +46,7 @@ class Movie < ActiveRecord::Base
     self.plot_summary = i.plot_summary
     self.plot_synopsis = i.plot_synopsis
     self.poster_url = i.poster
+    self.poster_image = open(i.poster)
     self.rating = i.rating
     self.tagline = i.tagline
     self.trailer_url = i.trailer_url
