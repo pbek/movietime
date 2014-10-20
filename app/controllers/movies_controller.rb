@@ -4,6 +4,7 @@ class MoviesController < ApplicationController
   def index
     @end_time_hour = 21
     @end_time_minute = 30
+    @check_end_time = false
 
     puts params
 
@@ -26,11 +27,15 @@ class MoviesController < ApplicationController
       unless params[:q][:end_time_minute].nil?
         @end_time_minute = params[:q][:end_time_minute].to_i
       end
+
+      unless params[:q][:check_end_time].nil?
+        @check_end_time = params[:q][:check_end_time].to_i == 1
+      end
     else
       params[:q] = {"source_id_in" => [1], "s" => "created_at desc"}
     end
     
-    max_length = (Date.today.to_time.to_i + @end_time_hour * 3600 + @end_time_minute * 60 - DateTime.now.to_i) / 60
+    max_length = @check_end_time ? (Date.today.to_time.to_i + @end_time_hour * 3600 + @end_time_minute * 60 - DateTime.now.to_i) / 60 : 1000000000
 
     @search = Movie.where("movies.length <= ?", max_length)
     @search = @search.search(params[:q])
