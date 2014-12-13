@@ -1,9 +1,13 @@
 namespace :movies do
   #
-  # usage: rake movies:update_database
+  # usage (manual): rake movies:update_database
+  # usage (auto): rake movies:update_database[auto]
   #
   desc "Search for movies"
-  task :update_database => :environment do |t, args|
+  task :update_database, [:action] => :environment do |t, args|
+    args.with_defaults(:action => "manual")
+    is_auto_mode = args.action == "auto"
+
     sources = Source.all
 
     if sources.count == 0
@@ -49,13 +53,18 @@ namespace :movies do
 
         i = Imdb::Search.new(clean_name)
         imdb_movies = i.movies
-        puts "  - make your movie choice or enter imdb id (skip with '-')"
-        imdb_movies[0..9].each_with_index do |imdb_movie, key|
-          puts "    (#{key}): #{imdb_movie.title.encode("iso-8859-1")} - #{imdb_movie.url}"
-        end
 
-        choice = STDIN.gets.chomp
-        next if choice == "-"
+        if !is_auto_mode
+          puts "  - make your movie choice or enter imdb id (skip with '-')"
+          imdb_movies[0..9].each_with_index do |imdb_movie, key|
+            puts "    (#{key}): #{imdb_movie.title.encode("iso-8859-1")} - #{imdb_movie.url}"
+          end
+
+          choice = STDIN.gets.chomp
+          next if choice == "-"
+        else
+          choice = ""
+        end
 
         # even search a 2nd time if we already have the movie so we get the right language
         imdb_movie = (choice.size > 1) ? Imdb::Movie.new(choice) : Imdb::Movie.new(imdb_movies[choice.to_i].id)
