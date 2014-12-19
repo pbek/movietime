@@ -46,7 +46,7 @@ class Movie < ActiveRecord::Base
     self.plot_summary = i.plot_summary
     self.plot_synopsis = i.plot_synopsis
     self.poster_url = i.poster
-    self.poster_image = open(i.poster)
+    self.poster_image = open(i.poster) unless i.poster.nil?
     self.rating = i.rating
     self.tagline = i.tagline
     self.trailer_url = i.trailer_url
