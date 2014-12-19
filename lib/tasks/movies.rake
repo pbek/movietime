@@ -66,6 +66,8 @@ namespace :movies do
           choice = ""
         end
 
+        next if imdb_movies.size == 0
+
         # even search a 2nd time if we already have the movie so we get the right language
         imdb_movie = (choice.size > 1) ? Imdb::Movie.new(choice) : Imdb::Movie.new(imdb_movies[choice.to_i].id)
         next if imdb_movie.nil? || imdb_movie.title.nil?
