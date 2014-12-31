@@ -41,6 +41,7 @@ namespace :movies do
           # clone the found movie and save it with new source id
           new_movie = movie.amoeba_dup
           new_movie.source_id = source.id
+          new_movie.poster_image = open(movie.poster_url)
           new_movie.save
           movie_id_list << new_movie.id
           puts "- cloned movie '#{movie.name}' in directory '#{directory}' from source '#{source.name}'"
