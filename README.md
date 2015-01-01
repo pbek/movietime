@@ -1,13 +1,20 @@
 # Movietime
  
-[Movietime](http://www.bekerle.com/Movietime) is a **personal movie database**, written in Ruby on Rails. You can specify local directories that will be checked for movies and matched with metadata and a poster image from [IMDB](http://www.imdb.org)
+[Movietime](http://www.bekerle.com/Movietime) is a simple **personal movie database**, written in [Ruby on Rails](http://rubyonrails.org/). You can specify local directories that will be checked for movies and matched with metadata and a poster image from [IMDB](http://www.imdb.org)
 
 Visit the project page here: [Movietime project page](http://www.bekerle.com/Movietime)
 
-## Screenshot
-![Screenhot](screenshot.png)
+## Screenshots
+![Main Screen](screenshot-01.png)
+![Post lightbox](screenshot-02.jpeg)
 
 ## Features
+- defining different movie folders (*Sources*) to scan for new movies with a *rake task*.
+- movie metadata and poster image can be fetched from [IMDB](http://www.imdb.org)
+- you can search for directors, cast members, sources, genres and other text in your database
+- you can specify the *end time* when filtering your movies, for example when you want to go to bed :)
+- IMDB page and trailers on [YouTube](https://www.youtube.com/) are linked
+- movies are taged with IMDB tags
 
 ## Installation
 You can either download the latest source here: [QOwnNotes Source on GitHub as ZIP](https://github.com/pbek/QOwnNotes/archive/develop.zip)
