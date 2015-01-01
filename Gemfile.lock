@@ -235,6 +235,7 @@ DEPENDENCIES
   paperclip (~> 4.2)
   quiet_assets
   rails (= 3.2.13)
+  rake
   ransack
   rolify
   rspec-rails

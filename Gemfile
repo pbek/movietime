@@ -42,3 +42,4 @@ gem 'select2-rails'
 gem 'font-awesome-sass-rails'
 gem 'amoeba'
 gem "paperclip", "~> 4.2"
+gem 'rake'
