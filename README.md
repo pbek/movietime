@@ -55,6 +55,12 @@ source ~/.rvm/scripts/rvm
 
 Then run `bundle install` again to install all gems.
 
+If you still have problems with your ruby version try:
+
+```shell
+gem install bundler
+```
+
 Now create the sqlite database with its tables and some data:
 
 ```shell
