@@ -41,5 +41,5 @@ gem 'will_paginate-bootstrap'
 gem 'select2-rails'
 gem 'font-awesome-sass-rails'
 gem 'amoeba'
-gem "paperclip", "~> 4.2"
+gem "paperclip", "~> 4.3"
 gem 'rake'
